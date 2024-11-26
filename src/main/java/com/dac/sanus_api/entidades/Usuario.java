@@ -1,10 +1,15 @@
 package com.dac.sanus_api.entidades;
 
+import java.io.Serializable;
 import java.util.UUID;
 
+import com.dac.sanus_api.dtos.UsuarioRequestDTO;
+
+import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.Table;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
@@ -14,7 +19,11 @@ import lombok.ToString;
 @NoArgsConstructor
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
 @ToString(onlyExplicitlyIncluded = true)
-public class Usuario {
+@Entity
+@Table(name = "TB_USUARIO")
+public class Usuario implements Serializable{
+    private static final long serialVersionUID = 1L;
+
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
     @ToString.Include
