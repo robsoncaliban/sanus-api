@@ -48,13 +48,13 @@ public class Usuario implements Serializable{
     @ToString.Include
     private boolean ativo;
 
-    public Usuario(String nome, String email, String senha, String telefone, String cpf) {
+    public Usuario(UsuarioRequestDTO usuarioDto) {
         this.ativo = true;
-        this.nome = nome;
-        this.email = email;
-        this.senha = senha;
-        this.telefone = telefone;
-        this.cpf = cpf;
+        this.nome = usuarioDto.nome();
+        this.email = usuarioDto.email();
+        this.senha = usuarioDto.senha();
+        this.telefone = usuarioDto.telefone();
+        this.cpf = usuarioDto.cpf();
     }
 
     
