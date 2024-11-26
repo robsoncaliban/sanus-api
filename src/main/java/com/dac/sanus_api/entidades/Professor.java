@@ -16,8 +16,8 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @Entity
-@Table(name = "TB_ALUNO" )
-public class Aluno implements Serializable{
+@Table(name = "TB_PROFESSOR")
+public class Professor implements Serializable{
     private static final long serialVersionUID = 1L;
     
     @Id
@@ -26,12 +26,11 @@ public class Aluno implements Serializable{
     @MapsId
     @JoinColumn(name = "id_usuario")
     private Usuario usuario;
-    //TODO: matricula vai ser gerada automaticamente?
     @Column(unique = true)
-    private String matricula;
+    private String cref;
 
-    public Aluno(Usuario usuario, String matricula) {
+    public Professor(Usuario usuario, String cref) {
         this.usuario = usuario;
-        this.matricula = matricula;
+        this.cref = cref;
     }
 }
