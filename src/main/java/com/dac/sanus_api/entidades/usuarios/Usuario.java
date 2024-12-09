@@ -4,8 +4,6 @@ import java.io.Serializable;
 import java.util.UUID;
 
 import com.dac.sanus_api.dtos.UsuarioRequestDTO;
-import com.dac.sanus_api.entidades.Aviso;
-
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
