@@ -23,6 +23,7 @@ public class AgendamentoAula implements Serializable {
 
     @Id
     private UUID id;
+
     private LocalDateTime dataHoraAgendado;
     private AgendamentoStatus statusAgendamento;
     private boolean visivel;
