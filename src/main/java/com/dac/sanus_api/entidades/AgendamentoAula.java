@@ -22,7 +22,8 @@ public class AgendamentoAula implements Serializable {
     private static final long serialVersionUID = 1L;
 
     @Id
-    private UUID id;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
 
     private LocalDateTime dataHoraAgendado;
     private AgendamentoStatus statusAgendamento;

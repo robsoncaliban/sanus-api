@@ -1,8 +1,6 @@
 package com.dac.sanus_api.entidades.usuarios;
 
 import java.io.Serializable;
-import java.util.UUID;
-
 import com.dac.sanus_api.dtos.UsuarioRequestDTO;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -24,9 +22,9 @@ public class Usuario implements Serializable{
     private static final long serialVersionUID = 1L;
 
     @Id
-    @GeneratedValue(strategy = GenerationType.UUID)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @ToString.Include
-    private UUID id;
+    private Long id;
     
     @ToString.Include
     private boolean admin;

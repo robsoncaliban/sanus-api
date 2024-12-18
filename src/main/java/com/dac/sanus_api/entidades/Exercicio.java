@@ -14,7 +14,10 @@ import lombok.NoArgsConstructor;
 @Table(name = "TB_EXERCICIO")
 public class Exercicio implements Serializable {
     private static final long serialVersionUID = 1L;
-    private UUID id;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+    @Column(nullable = false)
     private String name;
     private String descricao;
     private String videoExplicacao;

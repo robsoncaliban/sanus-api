@@ -2,8 +2,6 @@ package com.dac.sanus_api.entidades.usuarios;
 
 import java.io.Serializable;
 import java.util.List;
-import java.util.UUID;
-
 import com.dac.sanus_api.entidades.Aviso;
 
 import jakarta.persistence.Column;
@@ -26,7 +24,7 @@ public class Professor implements Serializable{
     private static final long serialVersionUID = 1L;
     
     @Id
-    private UUID id;
+    private Long id;
     @OneToOne
     @MapsId
     @JoinColumn(name = "id_usuario")

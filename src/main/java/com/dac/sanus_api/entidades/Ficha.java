@@ -22,7 +22,8 @@ public class Ficha implements Serializable {
     private static final long serialVersionUID = 1L;
 
     @Id
-    private UUID id;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
 
     @ManyToOne
     private Aula aula;
