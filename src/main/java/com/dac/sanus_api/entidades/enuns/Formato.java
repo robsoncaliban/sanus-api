@@ -1,4 +1,4 @@
-package com.dac.sanus_api.entidades;
+package com.dac.sanus_api.entidades.enuns;
 
 public enum Formato {
     AMRAP,
