@@ -41,6 +41,9 @@ public class PlanoAluno implements Serializable{
     private Plano plano;
 
     @OneToMany(mappedBy = "planoAluno")
+    private List<Pagamento> renovacoes;
+
+    @OneToMany(mappedBy = "planoAluno")
     private List<AgendamentoAula> agendamentos;
 
     @Temporal(TemporalType.DATE)
