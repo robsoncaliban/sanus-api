@@ -1,17 +1,13 @@
 package com.dac.sanus_api.entidades.usuarios;
 
 import java.io.Serializable;
-import java.util.List;
-import java.util.UUID;
-
-import com.dac.sanus_api.entidades.AgendamentoAula;
+import com.dac.sanus_api.entidades.PlanoAluno;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.MapsId;
-import jakarta.persistence.OneToMany;
 import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 import lombok.Data;
@@ -30,12 +26,12 @@ public class Aluno implements Serializable {
     @MapsId
     @JoinColumn(name = "id_usuario")
     private Usuario usuario;
+    @OneToOne(mappedBy = "aluno")
+    private PlanoAluno planoAluno;
+
     // TODO: matricula vai ser gerada automaticamente?
     @Column(unique = true)
     private String matricula;
-
-    @OneToMany(mappedBy = "aluno")
-    private List<AgendamentoAula> agendamentos;
 
     public Aluno(Usuario usuario, String matricula) {
         this.usuario = usuario;
