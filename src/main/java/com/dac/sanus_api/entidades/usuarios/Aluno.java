@@ -1,7 +1,7 @@
-package com.dac.sanus_api.entidades;
+package com.dac.sanus_api.entidades.usuarios;
 
 import java.io.Serializable;
-import java.util.UUID;
+import com.dac.sanus_api.entidades.PlanoAluno;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -16,21 +16,25 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @Entity
-@Table(name = "TB_PROFESSOR")
-public class Professor implements Serializable{
+@Table(name = "TB_ALUNO")
+public class Aluno implements Serializable {
     private static final long serialVersionUID = 1L;
-    
+
     @Id
-    private UUID id;
+    private Long id;
     @OneToOne
     @MapsId
     @JoinColumn(name = "id_usuario")
     private Usuario usuario;
-    @Column(unique = true)
-    private String cref;
+    @OneToOne(mappedBy = "aluno")
+    private PlanoAluno planoAluno;
 
-    public Professor(Usuario usuario, String cref) {
+    // TODO: matricula vai ser gerada automaticamente?
+    @Column(unique = true)
+    private String matricula;
+
+    public Aluno(Usuario usuario, String matricula) {
         this.usuario = usuario;
-        this.cref = cref;
+        this.matricula = matricula;
     }
 }
