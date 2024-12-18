@@ -2,10 +2,16 @@ package com.dac.sanus_api.entidades;
 
 import java.io.Serializable;
 import java.util.List;
-import java.util.UUID;
+import com.dac.sanus_api.entidades.enuns.Etapa;
+import com.dac.sanus_api.entidades.enuns.Formato;
 
 import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
@@ -26,12 +32,15 @@ public class Ficha implements Serializable {
     private Long id;
 
     @ManyToOne
+    @JoinColumn(name = "aula_id")
     private Aula aula;
 
     @EqualsAndHashCode.Include
+    @Enumerated(EnumType.STRING)
     private Etapa etapa;
+    @Enumerated(EnumType.STRING)
     private Formato formato;
 
-    @OneToMany
-    private List<Exercicio> exercicios;
+    @OneToMany(mappedBy = "ficha")
+    private List<FichaExercicio> exercicios;
 }
