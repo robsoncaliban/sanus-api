@@ -2,6 +2,8 @@ package com.dac.sanus_api.entidades.usuarios;
 
 import java.io.Serializable;
 import com.dac.sanus_api.dtos.UsuarioRequestDTO;
+
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -33,6 +35,7 @@ public class Usuario implements Serializable{
     private String nome;
     
     @EqualsAndHashCode.Include
+    @Column(unique = true)
     private String email;
     
     private String senha;
@@ -40,6 +43,7 @@ public class Usuario implements Serializable{
     private String telefone;
     
     @EqualsAndHashCode.Include
+    @Column(unique = true)
     private String cpf;
 
     @ToString.Include

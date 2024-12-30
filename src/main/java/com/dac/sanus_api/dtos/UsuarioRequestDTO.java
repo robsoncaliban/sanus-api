@@ -7,6 +7,7 @@ import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
 
 public record UsuarioRequestDTO(
+    boolean admin,
     @NotBlank
     String nome,
     @Email 
