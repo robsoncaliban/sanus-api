@@ -51,6 +51,7 @@ public class Usuario implements Serializable{
 
     public Usuario(UsuarioRequestDTO usuarioDto) {
         this.ativo = true;
+        this.admin = usuarioDto.admin();
         this.nome = usuarioDto.nome();
         this.email = usuarioDto.email();
         this.senha = usuarioDto.senha();
