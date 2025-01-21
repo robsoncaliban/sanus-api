@@ -22,6 +22,7 @@ public class Aluno implements Serializable {
 
     @Id
     private Long id;
+    private boolean ativo;
     @OneToOne
     @MapsId
     @JoinColumn(name = "id_usuario")
@@ -32,9 +33,10 @@ public class Aluno implements Serializable {
     // TODO: matricula vai ser gerada automaticamente?
     @Column(unique = true)
     private String matricula;
-
+    
     public Aluno(Usuario usuario, String matricula) {
         this.usuario = usuario;
         this.matricula = matricula;
+        this.ativo = true;
     }
 }
