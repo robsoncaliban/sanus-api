@@ -8,7 +8,6 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
-import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
@@ -16,7 +15,6 @@ import lombok.ToString;
 
 @Data
 @NoArgsConstructor
-@AllArgsConstructor
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
 @ToString(onlyExplicitlyIncluded = true)
 @Entity
@@ -49,7 +47,23 @@ public class Usuario implements Serializable {
     @Column(unique = true)
     private String cpf;
 
+    private String sexo;
+
     @ToString.Include
     private boolean ativo;
 
+    public Usuario(boolean admin, String nome, String email, String senha, String telefone, String cpf, String sexo,
+            boolean ativo) {
+        this.admin = admin;
+        this.nome = nome;
+        this.email = email;
+        this.senha = senha;
+        this.telefone = telefone;
+        this.cpf = cpf;
+        this.sexo = sexo;
+        this.ativo = ativo;
+    }
+
+
+    
 }

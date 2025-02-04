@@ -3,6 +3,8 @@ package com.dac.sanus_api.services;
 import java.util.List;
 
 import org.springframework.beans.BeanUtils;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import com.dac.sanus_api.entidades.usuarios.Aluno;
@@ -34,8 +36,12 @@ public class UsuarioService {
         return repository.save(usuarioNovo);
     }
 
-    public List<Usuario> buscarAlunosAtivos() {
+    public List<Usuario> buscarAlunos() {
         return repository.findAll();
+    }
+
+    public Page<Usuario> buscarAlunos(Pageable page) {
+        return repository.findAll(page);
     }
 
 }

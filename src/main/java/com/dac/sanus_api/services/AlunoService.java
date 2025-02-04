@@ -3,6 +3,8 @@ package com.dac.sanus_api.services;
 import java.util.List;
 import java.util.Optional;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import com.dac.sanus_api.entidades.usuarios.Aluno;
@@ -26,6 +28,9 @@ public class AlunoService {
     public List<Aluno> buscarTodosAlunos() {
         return repository.findAll();
     }
+    public Page<Aluno> buscarTodosAlunos(Pageable page){
+        return repository.findAll(page);
+    }
 
     @Transactional
     public Aluno salvarAluno(Aluno aluno) {
@@ -46,6 +51,10 @@ public class AlunoService {
 
     public List<Aluno> buscarAlunosAtivos() {
         return repository.findByAtivo(true);
+    }
+
+    public Page<Aluno> buscarAlunosAtivos(Pageable page) {
+        return repository.findByAtivo(true, page);
     }
 
     public void desativarConta(Long id) {

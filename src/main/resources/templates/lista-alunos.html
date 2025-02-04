@@ -22,7 +22,7 @@
 				</tr>
 			</thead>
 			<tbody>
-				<tr th:each="aluno, iterStat : ${alunos}">
+				<tr th:each="aluno, iterStat : ${alunos.content}">
 					<td th:text="${iterStat.index + 1}"></td>
 					<td th:text="${aluno.usuario.admin} ? 'Sim' : 'Não'"></td>
 					<td th:text="${aluno.usuario.nome}"></td>
@@ -33,5 +33,14 @@
 				</tr>
 			</tbody>
 		</table>
+		 <div>
+			<a th:if="${alunos.hasPrevious()}" 
+			   th:href="@{/alunos/list/page(page=${alunos.number - 1}, size=${alunos.size})}">Previous</a>
+	
+			<span>Page <span th:text="${alunos.number + 1}"></span> of <span th:text="${alunos.totalPages}"></span></span>
+	
+			<a th:if="${alunos.hasNext()}" 
+			   th:href="@{/alunos/list/page(page=${alunos.number + 1}, size=${alunos.size})}">Next</a>
+		</div>
 	</body>
 </html>
