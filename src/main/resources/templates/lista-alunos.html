@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="pt-br" xmlns:th="http://www.thymeleaf.org">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>Inicio</title>
+	</head>
+	<body>
+		<th:block th:replace="~{fragments/menu :: header}"></th:block>
+		<h2>Usuários ativos:</h2>
+		<a href="/alunos/novo">Adicionar aluno</a>
+		<table th:if="${not #lists.isEmpty(alunos)}">
+			<thead>
+				<tr>
+					<th>#</th>
+					<th>ADMIN</th>
+					<th>Nome</th>
+					<th>Telefone</th>
+					<th>CPF</th>
+					<th>Status</th>
+					<th>Editar</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr th:each="aluno, iterStat : ${alunos}">
+					<td th:text="${iterStat.index + 1}"></td>
+					<td th:text="${aluno.usuario.admin} ? 'Sim' : 'Não'"></td>
+					<td th:text="${aluno.usuario.nome}"></td>
+					<td th:text="${aluno.usuario.telefone}"></td>
+					<td th:text="${aluno.usuario.cpf}"></td>
+					<td th:text="${aluno.ativo} ? 'Ativo' : 'Inativo'"></td>
+					<td><a th:href="@{/alunos/editar/{id}(id=${aluno.id})}">Editar</a></td>
+				</tr>
+			</tbody>
+		</table>
+	</body>
+</html>

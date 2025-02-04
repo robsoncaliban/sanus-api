@@ -1,38 +1,38 @@
 package com.dac.sanus_api.test;
 
-
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Configuration;
 
-import com.dac.sanus_api.dtos.AlunoRequestDTO;
-import com.dac.sanus_api.dtos.UsuarioRequestDTO;
+import com.dac.sanus_api.entidades.usuarios.Aluno;
+import com.dac.sanus_api.entidades.usuarios.Usuario;
 import com.dac.sanus_api.services.AlunoService;
 
 import lombok.AllArgsConstructor;
 
 @Configuration
 @AllArgsConstructor
-public class TestConfig implements CommandLineRunner{
+public class TestConfig implements CommandLineRunner {
 
-    private AlunoService alunoService;
+        private AlunoService alunoService;
 
-    @Override
-    public void run(String... args) throws Exception {
-    
-        var senha = "123456";
-        UsuarioRequestDTO usuario01 = new UsuarioRequestDTO(true, "Juvenal", "juvenal@gmail",
-         senha, "000000001", "13583720040");
-        UsuarioRequestDTO usuario02 = new UsuarioRequestDTO(false, "Alison", "alison@gmail",
-         senha, "000000002", "24792177014");
-         UsuarioRequestDTO usuario03 = new UsuarioRequestDTO(false, "Pedro", "pedro@gmail",
-         senha, "000000003", "37997862013");
-        AlunoRequestDTO aluno01 = new AlunoRequestDTO(usuario01, "202400001");
-        AlunoRequestDTO aluno02 = new AlunoRequestDTO(usuario02, "202400002");
-        AlunoRequestDTO aluno03 = new AlunoRequestDTO(usuario03, "202400003");
-        alunoService.inserirAluno(aluno01);
-        alunoService.inserirAluno(aluno02);
-        var alunoInativo = alunoService.inserirAluno(aluno03); 
-        alunoService.desativarConta(alunoInativo.getId());
-    }
-    
+        @Override
+        public void run(String... args) throws Exception {
+                var usuario01 = new Usuario(1L, true, "Alice Johnson", "alice.johnson@example.com", "password789",
+                                "1122334455", "00000000000", true);
+                var usuario02 = new Usuario(2L, true, "John Doe", "john.doe@example.com", "password123", "1234567890",
+                                "11111111111", true);
+                var usuario03 = new Usuario(3L, false, "Jane Smith", "jane.smith@example.com", "password456",
+                                "0987654321", "22222222222", false);
+
+                var aluno01 = new Aluno(usuario01);
+                var aluno02 = new Aluno(usuario02);
+                var aluno03 = new Aluno(usuario03);
+
+                alunoService.salvarAluno(aluno01);
+                alunoService.salvarAluno(aluno02);
+                var alunoInativo = alunoService.salvarAluno(aluno03);
+
+                alunoService.desativarConta(alunoInativo.getId());
+        }
+
 }

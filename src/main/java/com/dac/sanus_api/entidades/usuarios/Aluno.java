@@ -3,7 +3,6 @@ package com.dac.sanus_api.entidades.usuarios;
 import java.io.Serializable;
 import com.dac.sanus_api.entidades.PlanoAluno;
 
-import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
@@ -30,13 +29,8 @@ public class Aluno implements Serializable {
     @OneToOne(mappedBy = "aluno")
     private PlanoAluno planoAluno;
 
-    // TODO: matricula vai ser gerada automaticamente?
-    @Column(unique = true)
-    private String matricula;
-    
-    public Aluno(Usuario usuario, String matricula) {
+    public Aluno(Usuario usuario) {
         this.usuario = usuario;
-        this.matricula = matricula;
         this.ativo = true;
     }
 }

@@ -1,8 +1,11 @@
 package com.dac.sanus_api.services;
 
+import java.util.List;
+
+import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
 
-import com.dac.sanus_api.dtos.UsuarioRequestDTO;
+import com.dac.sanus_api.entidades.usuarios.Aluno;
 import com.dac.sanus_api.entidades.usuarios.Usuario;
 import com.dac.sanus_api.repositories.UsuarioRepository;
 
@@ -15,14 +18,24 @@ public class UsuarioService {
         this.repository = repository;
     }
 
+    public Usuario inserirUsuario(Aluno aluno) {
+        var usuario = repository.findByEmail(aluno.getUsuario().getEmail());
 
-    public Usuario inserirUsuario(UsuarioRequestDTO usuarioDto){
-        var usuario = repository.findByEmail(usuarioDto.email());
-        if(usuario.isPresent()){
-            return usuario.get();
+        if (usuario.isPresent()) {
+            var usuarioExistente = usuario.get();
+            BeanUtils.copyProperties(aluno.getUsuario(), usuarioExistente, "id");
+            System.err.println();
+            return repository.save(usuarioExistente);
         }
-        var usuarioNovo = new Usuario(usuarioDto);
+
+        var usuarioNovo = new Usuario();
+        BeanUtils.copyProperties(aluno.getUsuario(), usuarioNovo, "id");
+
         return repository.save(usuarioNovo);
+    }
+
+    public List<Usuario> buscarAlunosAtivos() {
+        return repository.findAll();
     }
 
 }

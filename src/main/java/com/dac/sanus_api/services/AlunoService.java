@@ -5,7 +5,6 @@ import java.util.Optional;
 
 import org.springframework.stereotype.Service;
 
-import com.dac.sanus_api.dtos.AlunoRequestDTO;
 import com.dac.sanus_api.entidades.usuarios.Aluno;
 import com.dac.sanus_api.repositories.AlunoRepository;
 
@@ -15,31 +14,41 @@ import lombok.AllArgsConstructor;
 @Service
 @AllArgsConstructor
 public class AlunoService {
-    
+
     private AlunoRepository repository;
     private UsuarioService usuarioService;
 
-    //TODO: Refatorar
-    public Optional<Aluno> buscarAlunoPorId(Long id){
+    public Optional<Aluno> buscarAlunoPorId(Long id) {
         return repository.findById(id);
+
+    }
+
+    public List<Aluno> buscarTodosAlunos() {
+        return repository.findAll();
     }
 
     @Transactional
-    public Aluno inserirAluno(AlunoRequestDTO alunoDto){
-        var usurio = usuarioService.inserirUsuario(alunoDto.usuario());    
-        if(buscarAlunoPorId(usurio.getId()).isPresent()){
-            //TODO: retorna exception personalizada
-            return null;
+    public Aluno salvarAluno(Aluno aluno) {
+
+        var usuario = usuarioService.inserirUsuario(aluno);
+
+        Optional<Aluno> existingAluno = buscarAlunoPorId(usuario.getId());
+
+        if (existingAluno.isPresent()) {
+            Aluno existing = existingAluno.get();
+            existing.setUsuario(usuario);
+            return repository.save(existing);
+        } else {
+            Aluno novoAluno = new Aluno(usuario);
+            return repository.save(novoAluno);
         }
-        Aluno aluno = new Aluno(usurio, alunoDto.matricula());
-        return repository.save(aluno);
     }
 
-    public List<Aluno> buscarAlunosAtivos(){
+    public List<Aluno> buscarAlunosAtivos() {
         return repository.findByAtivo(true);
     }
 
-    public void desativarConta(Long id){
+    public void desativarConta(Long id) {
         var aluno = buscarAlunoPorId(id).get();
         aluno.setAtivo(false);
         repository.save(aluno);
