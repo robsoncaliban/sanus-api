@@ -21,7 +21,6 @@ public class Aluno implements Serializable {
 
     @Id
     private Long id;
-    private boolean ativo;
     @OneToOne
     @MapsId
     @JoinColumn(name = "id_usuario")
@@ -31,6 +30,5 @@ public class Aluno implements Serializable {
 
     public Aluno(Usuario usuario) {
         this.usuario = usuario;
-        this.ativo = true;
     }
 }

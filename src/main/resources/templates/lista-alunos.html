@@ -2,12 +2,13 @@
 <html lang="pt-br" xmlns:th="http://www.thymeleaf.org">
 	<head>
 		<meta charset="UTF-8" />
+		<link type="text/css" rel="stylesheet" th:href="@{/style.css}">
 		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 		<title>Inicio</title>
 	</head>
 	<body>
 		<th:block th:replace="~{fragments/menu :: header}"></th:block>
-		<h2>Usuários ativos:</h2>
+		<h2>Usuários:</h2>
 		<a href="/alunos/novo">Adicionar aluno</a>
 		<table th:if="${not #lists.isEmpty(alunos)}">
 			<thead>
@@ -17,8 +18,9 @@
 					<th>Nome</th>
 					<th>Telefone</th>
 					<th>CPF</th>
-					<th>Status</th>
+					<th>Sexo</th>
 					<th>Editar</th>
+					<th>Remover</th>
 				</tr>
 			</thead>
 			<tbody>
@@ -28,8 +30,10 @@
 					<td th:text="${aluno.usuario.nome}"></td>
 					<td th:text="${aluno.usuario.telefone}"></td>
 					<td th:text="${aluno.usuario.cpf}"></td>
-					<td th:text="${aluno.ativo} ? 'Ativo' : 'Inativo'"></td>
-					<td><a th:href="@{/alunos/editar/{id}(id=${aluno.id})}">Editar</a></td>
+					<td th:text="${aluno.usuario.sexo}"></td>
+					<td><a th:href="@{/alunos/editar/{id}(id=${aluno.id})}"><button id="botao-editar">Editar</button></a></td>
+					<td><a th:href="@{/alunos/deletar/{id}(id=${aluno.id})}" 
+						onclick="return confirm('Tem certeza que deseja remover este usuario?');"><button id="botao-remover">Remover</button></a></td>
 				</tr>
 			</tbody>
 		</table>

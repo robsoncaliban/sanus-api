@@ -3,11 +3,13 @@
 	<head>
 		<meta charset="utf-8" />
 		<title>Cadastro de Usuário</title>
+		<link type="text/css" rel="stylesheet" th:href="@{/style.css}">
 		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 	</head>
 	<body>
 		<th:block th:replace="~{fragments/menu :: header}"></th:block>
-		<h2>Lista de alunos</h2>
+		<h2>Formulario:</h2>
+		<a href="/alunos/list/page">Listar alunos</a>
 		<form th:action="@{/alunos}" th:object="${aluno}" method="post">
 			<div>
 				<label for="nome">Nome</label>
@@ -43,6 +45,16 @@
 				<label for="cpf">CPF</label>
 				<input type="text" id="cpf" th:field="*{usuario.cpf}" placeholder="Escreva seu CPF" required />
 			</div>
+			<div>
+				<label for="sexo">Sexo</label>
+    
+				<input type="radio" id="masculino" name="sexo" value="M" th:field="*{usuario.sexo}">
+				<label class="sexo" for="masculino">Masculino</label>
+			
+				<input type="radio" id="feminino" name="sexo" value="F" th:field="*{usuario.sexo}">
+				<label class="sexo" for="feminino">Feminino</label>
+			</div>
+						
 
 			<div>
 				<label for="admin">Administrador</label>

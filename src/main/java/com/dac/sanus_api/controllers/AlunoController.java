@@ -1,7 +1,6 @@
 package com.dac.sanus_api.controllers;
 
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.stereotype.Controller;
@@ -11,7 +10,6 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 
 import com.dac.sanus_api.entidades.usuarios.Aluno;
 import com.dac.sanus_api.services.AlunoService;
@@ -25,13 +23,6 @@ public class AlunoController {
 
     private final AlunoService alunoService;
 
-    @GetMapping
-    public String todosOsAlunos(Model model) {
-        var alunos = alunoService.buscarTodosAlunos();
-        model.addAttribute("alunos", alunos);
-        return "lista-alunos";
-
-    }
 
     @GetMapping("/novo")
     public String inserirAluno(Model model) {
@@ -42,7 +33,7 @@ public class AlunoController {
     @PostMapping
     public String inserirAluno(@ModelAttribute Aluno aluno, Model model) {
         alunoService.salvarAluno(aluno);
-        return todosOsAlunos(model);
+        return "redirect:/alunos/list/page";
     }
 
     @GetMapping("/editar/{id}")
@@ -55,6 +46,12 @@ public class AlunoController {
         return "novo-aluno";
     }
 
+    @GetMapping("/deletar/{id}")
+    public String deletarAluno(@PathVariable Long id, Model model) {
+        alunoService.deletarConta(id);
+        return "redirect:/alunos/list/page";
+    }
+
     @GetMapping("/list/page")
     public String listarAlunosPage(
         @PageableDefault(page = 0, size = 3) Pageable page,
@@ -63,6 +60,6 @@ public class AlunoController {
             Page<Aluno> alunos = alunoService.buscarTodosAlunos(page);
             model.addAttribute("alunos", alunos);
             return "lista-alunos";
-        }
+    }
 
 }

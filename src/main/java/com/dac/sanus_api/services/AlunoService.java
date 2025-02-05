@@ -25,9 +25,6 @@ public class AlunoService {
 
     }
 
-    public List<Aluno> buscarTodosAlunos() {
-        return repository.findAll();
-    }
     public Page<Aluno> buscarTodosAlunos(Pageable page){
         return repository.findAll(page);
     }
@@ -49,17 +46,12 @@ public class AlunoService {
         }
     }
 
-    public List<Aluno> buscarAlunosAtivos() {
-        return repository.findByAtivo(true);
-    }
-
     public Page<Aluno> buscarAlunosAtivos(Pageable page) {
         return repository.findByAtivo(true, page);
     }
 
-    public void desativarConta(Long id) {
+    public void deletarConta(Long id) {
         var aluno = buscarAlunoPorId(id).get();
-        aluno.setAtivo(false);
-        repository.save(aluno);
+        repository.delete(aluno);
     }
 }
