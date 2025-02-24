@@ -1,7 +1,8 @@
 package com.dac.sanus_api.entidades.usuarios;
 
 import java.io.Serializable;
-import com.dac.sanus_api.dtos.UsuarioRequestDTO;
+
+import com.dac.sanus_api.entidades.dtos.request.UsuarioRequestDTO;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -54,7 +55,6 @@ public class Usuario implements Serializable{
         this.admin = usuarioDto.admin();
         this.nome = usuarioDto.nome();
         this.email = usuarioDto.email();
-        this.senha = usuarioDto.senha();
         this.telefone = usuarioDto.telefone();
         this.cpf = usuarioDto.cpf();
     }
