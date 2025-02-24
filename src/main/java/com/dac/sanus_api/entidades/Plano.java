@@ -2,7 +2,11 @@ package com.dac.sanus_api.entidades;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.util.List;
+
+import com.dac.sanus_api.entidades.dtos.request.PlanoRequestDto;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -11,6 +15,7 @@ import jakarta.persistence.Id;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import lombok.Data;
+import lombok.ToString;
 
 @Entity
 @Table(name = "TB_PLANO")
@@ -22,22 +27,36 @@ public class Plano implements Serializable{
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @ToString.Exclude
     @OneToMany(mappedBy = "plano")
     private List<PlanoAluno> planosAluno;
-
+    
     @Column(nullable = false)
     private String nome;
+    
     @Column(nullable = false)
     private String descricao;
-    private int diasSemanaisDisponiveis;
-    private int duracaoMeses;
+    
     @Column(nullable = false)
+    private int duracaoMesses;
+    
+    @Column(nullable = false)
+    private int diasSemanaisDisponiveis;
+    
+    @Column(nullable = false, scale = 2)
     private BigDecimal valor;
+    
+    @Column(nullable = false)
     private int congelamentoDias;
-
-    public Plano(String nome, String descricao, BigDecimal valor) {
-        this.nome = nome;
-        this.descricao = descricao;
-        this.valor = valor;
+    
+    public Plano(PlanoRequestDto planoDto) {
+        this.nome = planoDto.nome();
+        this.descricao = planoDto.descricao();
+        this.duracaoMesses = planoDto.duracaoMesses();
+        this.diasSemanaisDisponiveis = planoDto.diasSemanaisDisponiveis();
+        this.valor = planoDto.valor().setScale(2, RoundingMode.HALF_UP);
+        this.congelamentoDias = planoDto.congelamentoDias();
     }
+
+    
 }
