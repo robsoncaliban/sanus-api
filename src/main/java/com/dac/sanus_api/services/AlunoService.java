@@ -13,6 +13,7 @@ import com.dac.sanus_api.entidades.usuarios.Aluno;
 import com.dac.sanus_api.entidades.usuarios.Usuario;
 import com.dac.sanus_api.repositories.AlunoRepository;
 import com.dac.sanus_api.services.exceptions.DuplicateCredentialsException;
+import com.dac.sanus_api.services.exceptions.NotFoundException;
 import com.dac.sanus_api.utils.Generator;
 
 import jakarta.transaction.Transactional;
@@ -50,6 +51,11 @@ public class AlunoService {
         String ultimaMatricula = alunoRepository.findUltimaMatriculaPorAno(ano);
         return generator.gerarMatricula(ultimaMatricula);
     }    
+
+    public Aluno buscarAlunoPorMatricula(String matricula){
+        return alunoRepository.findByMatricula(matricula)
+            .orElseThrow(() -> new NotFoundException("O aluno com essa matricula: "+ matricula+ " não existe."));
+    }
 
     public Page<Aluno> buscarTodos(Pageable page){
         return alunoRepository.findAll(page);
