@@ -1,13 +1,19 @@
 package com.dac.sanus_api.services;
 
-import java.util.List;
-import java.util.Optional;
+import java.time.LocalDate;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
-import com.dac.sanus_api.dtos.AlunoRequestDTO;
+import com.dac.sanus_api.entidades.Plano;
+import com.dac.sanus_api.entidades.PlanoAluno;
+import com.dac.sanus_api.entidades.dtos.request.AlunoRequestDTO;
 import com.dac.sanus_api.entidades.usuarios.Aluno;
+import com.dac.sanus_api.entidades.usuarios.Usuario;
 import com.dac.sanus_api.repositories.AlunoRepository;
+import com.dac.sanus_api.services.exceptions.DuplicateCredentialsException;
+import com.dac.sanus_api.utils.Generator;
 
 import jakarta.transaction.Transactional;
 import lombok.AllArgsConstructor;
@@ -16,32 +22,37 @@ import lombok.AllArgsConstructor;
 @AllArgsConstructor
 public class AlunoService {
     
-    private AlunoRepository repository;
+    private AlunoRepository alunoRepository;
     private UsuarioService usuarioService;
-
-    //TODO: Refatorar
-    public Optional<Aluno> buscarAlunoPorId(Long id){
-        return repository.findById(id);
-    }
+    private PlanoService planoService;
+    private Generator generator;
 
     @Transactional
     public Aluno inserirAluno(AlunoRequestDTO alunoDto){
-        var usurio = usuarioService.inserirUsuario(alunoDto.usuario());    
-        if(buscarAlunoPorId(usurio.getId()).isPresent()){
-            //TODO: retorna exception personalizada
-            return null;
-        }
-        Aluno aluno = new Aluno(usurio, alunoDto.matricula());
-        return repository.save(aluno);
+        Usuario usuario = usuarioService.inserirUsuario(alunoDto.usuario());
+        alunoRepository.findById(usuario.getId())
+            .ifPresent(aluno -> new DuplicateCredentialsException(aluno.getId()));
+        
+            
+        Plano plano = planoService.buscarPlanoPorId(alunoDto.planoId());
+            
+        String matriculaGerada = gerarMatricula();
+        String senhaAleatoria = generator.gerarSenhaAleatoria(15);
+        var alunoNovo = new Aluno(usuario, matriculaGerada);
+        alunoNovo.getUsuario().setSenha(senhaAleatoria);
+        var planoAluno = new PlanoAluno(alunoNovo, plano);
+        alunoNovo.setPlanoAluno(planoAluno);
+
+        return alunoRepository.save(alunoNovo);
+    }
+    private String gerarMatricula(){
+        String ano = String.valueOf(LocalDate.now().getYear());
+        String ultimaMatricula = alunoRepository.findUltimaMatriculaPorAno(ano);
+        return generator.gerarMatricula(ultimaMatricula);
+    }    
+
+    public Page<Aluno> buscarTodos(Pageable page){
+        return alunoRepository.findAll(page);
     }
 
-    public List<Aluno> buscarAlunosAtivos(){
-        return repository.findByAtivo(true);
-    }
-
-    public void desativarConta(Long id){
-        var aluno = buscarAlunoPorId(id).get();
-        aluno.setAtivo(false);
-        repository.save(aluno);
-    }
 }
