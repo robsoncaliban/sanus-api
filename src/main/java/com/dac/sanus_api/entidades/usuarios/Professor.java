@@ -25,6 +25,8 @@ public class Professor implements Serializable{
     
     @Id
     private Long id;
+
+    private boolean ativo;
     @OneToOne
     @MapsId
     @JoinColumn(name = "id_usuario")
@@ -37,5 +39,6 @@ public class Professor implements Serializable{
     public Professor(Usuario usuario, String cref) {
         this.usuario = usuario;
         this.cref = cref;
+        this.ativo = true;
     }
 }

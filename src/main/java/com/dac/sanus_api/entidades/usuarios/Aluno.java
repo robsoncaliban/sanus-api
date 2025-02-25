@@ -1,8 +1,12 @@
 package com.dac.sanus_api.entidades.usuarios;
 
 import java.io.Serializable;
+
+
 import com.dac.sanus_api.entidades.PlanoAluno;
 
+
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
@@ -12,6 +16,7 @@ import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import lombok.ToString;
 
 @Data
 @NoArgsConstructor
@@ -22,19 +27,21 @@ public class Aluno implements Serializable {
 
     @Id
     private Long id;
+    
     @OneToOne
     @MapsId
-    @JoinColumn(name = "id_usuario")
+    @JoinColumn(name = "id_usuario", nullable = false)
     private Usuario usuario;
-    @OneToOne(mappedBy = "aluno")
+
+    @ToString.Exclude
+    @OneToOne(mappedBy = "aluno", cascade = CascadeType.ALL)
     private PlanoAluno planoAluno;
-
-    // TODO: matricula vai ser gerada automaticamente?
-    @Column(unique = true)
+    
+    @Column(unique = true, nullable = false)
     private String matricula;
-
+    
     public Aluno(Usuario usuario, String matricula) {
         this.usuario = usuario;
         this.matricula = matricula;
-    }
+    }  
 }
