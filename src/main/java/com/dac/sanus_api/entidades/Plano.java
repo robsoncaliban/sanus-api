@@ -3,7 +3,6 @@ package com.dac.sanus_api.entidades;
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
-import java.util.List;
 
 import com.dac.sanus_api.entidades.dtos.request.PlanoRequestDto;
 
@@ -12,11 +11,9 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import lombok.ToString;
 
 @Entity
 @Table(name = "TB_PLANO")
@@ -28,10 +25,6 @@ public class Plano implements Serializable{
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-
-    @ToString.Exclude
-    @OneToMany(mappedBy = "plano")
-    private List<PlanoAluno> planosAluno;
     
     @Column(nullable = false)
     private String nome;

@@ -9,6 +9,7 @@ import java.util.List;
 import com.dac.sanus_api.entidades.enuns.PlanoStatus;
 import com.dac.sanus_api.entidades.usuarios.Aluno;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
@@ -40,7 +41,7 @@ public class PlanoAluno implements Serializable{
     @Setter(AccessLevel.NONE)
     private Long id;
     
-    @OneToOne
+    @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "aluno_id", nullable = false)
     private Aluno aluno;
     
@@ -66,7 +67,7 @@ public class PlanoAluno implements Serializable{
     public PlanoAluno(Aluno aluno, Plano plano) {
         this.aluno = aluno;
         this.plano = plano;
-        this.status = PlanoStatus.BLOQUEADO;
+        this.status = PlanoStatus.ATIVO;
         this.dataAssinatura = LocalDate.now();
         this.pagamentos = new ArrayList<>();
         this.agendamentos = new ArrayList<>();
