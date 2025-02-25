@@ -1,6 +1,5 @@
 package com.dac.sanus_api.entidades.dtos.response;
 
-import java.math.BigDecimal;
 import java.time.LocalDate;
 
 import com.dac.sanus_api.entidades.PlanoAluno;
@@ -13,8 +12,8 @@ public record AlunoResponseDto(
     Long idPlano,
     String planoNome,
     LocalDate dataAssinatura,
-    LocalDate davaVencimento,
-    PlanoStatus statusDoPlano
+    LocalDate dataVencimento,
+    PlanoStatus statusPlano
 ) {
     public AlunoResponseDto(Aluno aluno, PlanoAluno planoAluno) {
         this(new UsuarioReponseDto(aluno.getUsuario()), 
