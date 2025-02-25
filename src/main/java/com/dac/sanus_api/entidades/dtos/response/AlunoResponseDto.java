@@ -10,21 +10,16 @@ import com.dac.sanus_api.entidades.usuarios.Aluno;
 public record AlunoResponseDto(
     UsuarioReponseDto usuarioReponseDto,
     String matricula,
-    String nomeDoPlano,
-    String descricaoDoPlano,
-    int diasSemanaisDisponiveis,
-    BigDecimal valorDoPlano,
-    int congelamentoDias,
+    Long idPlano,
+    String planoNome,
     LocalDate dataAssinatura,
     LocalDate davaVencimento,
     PlanoStatus statusDoPlano
 ) {
     public AlunoResponseDto(Aluno aluno, PlanoAluno planoAluno) {
-        this(new UsuarioReponseDto(aluno.getUsuario()),
-            aluno.getMatricula(), planoAluno.getPlano().getNome(), planoAluno.getPlano().getDescricao(),
-            planoAluno.getPlano().getDiasSemanaisDisponiveis(), planoAluno.getPlano().getValor(),
-            planoAluno.getPlano().getCongelamentoDias(),
-            planoAluno.getDataAssinatura(), planoAluno.getDataVencimento(),
-            planoAluno.getStatus());
+        this(new UsuarioReponseDto(aluno.getUsuario()), 
+        aluno.getMatricula(), planoAluno.getPlano().getId(), planoAluno.getNomePlano(),
+        planoAluno.getDataAssinatura(), planoAluno.getDataVencimento(),
+        planoAluno.getStatus());
     }
 }
