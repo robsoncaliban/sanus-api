@@ -2,9 +2,9 @@ package com.dac.sanus_api.entidades.dtos.request;
 
 import jakarta.validation.constraints.NotNull;
 
-public record AlunoRequestDTO(
+public record AlunoRequestDto(
     @NotNull
-    UsuarioRequestDTO usuario,
+    UsuarioRequestDto usuario,
     @NotNull
     Long planoId
     ) {
