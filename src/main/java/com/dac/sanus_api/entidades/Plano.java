@@ -15,11 +15,13 @@ import jakarta.persistence.Id;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 import lombok.ToString;
 
 @Entity
 @Table(name = "TB_PLANO")
 @Data
+@NoArgsConstructor
 public class Plano implements Serializable{
     private static final long serialVersionUID = 1L;
 
