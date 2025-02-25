@@ -1,23 +1,21 @@
-package com.dac.sanus_api.dtos;
+package com.dac.sanus_api.entidades.dtos.request;
 
 import org.hibernate.validator.constraints.br.CPF;
 
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.Size;
 
 public record UsuarioRequestDTO(
     boolean admin,
     @NotBlank
     String nome,
     @Email 
-    String email,
     @NotBlank
-    @Size(min = 5, max = 12) 
-    String senha,
+    String email,
     @NotBlank 
     String telefone,
     @CPF 
+    @NotBlank
     String cpf) {
 
 }
