@@ -2,7 +2,7 @@ package com.dac.sanus_api.entidades.usuarios;
 
 import java.io.Serializable;
 
-import com.dac.sanus_api.entidades.dtos.request.UsuarioRequestDTO;
+import com.dac.sanus_api.entidades.dtos.request.UsuarioRequestDto;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -50,7 +50,7 @@ public class Usuario implements Serializable{
     @ToString.Include
     private boolean ativo;
 
-    public Usuario(UsuarioRequestDTO usuarioDto) {
+    public Usuario(UsuarioRequestDto usuarioDto) {
         this.ativo = true;
         this.admin = usuarioDto.admin();
         this.nome = usuarioDto.nome();
