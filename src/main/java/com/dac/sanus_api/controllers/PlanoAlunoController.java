@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.dac.sanus_api.entidades.PlanoAluno;
+import com.dac.sanus_api.entidades.dtos.request.PlanoAlunoUpdateRequestDto;
 import com.dac.sanus_api.entidades.dtos.response.AlunoResponseDto;
 import com.dac.sanus_api.services.PlanoAlunoService;
 
@@ -20,8 +21,10 @@ public class PlanoAlunoController {
     private PlanoAlunoService planoAlunoService;
 
     @PutMapping
-    public ResponseEntity<AlunoResponseDto> updatePlanoDoAluno(@RequestBody String matricula, @RequestBody Long idPlanoNovo){
-        PlanoAluno planoAluno = planoAlunoService.atualizarPlanoDoAluno(matricula, idPlanoNovo);
+    public ResponseEntity<AlunoResponseDto> updatePlanoDoAluno(
+            @RequestBody PlanoAlunoUpdateRequestDto planoAlunoUpdateRequestDto) {
+        PlanoAluno planoAluno = planoAlunoService.atualizarPlanoDoAluno(planoAlunoUpdateRequestDto.matricula(),
+                planoAlunoUpdateRequestDto.idPlanoNovo());
         var responseDto = new AlunoResponseDto(planoAluno.getAluno(), planoAluno);
         return ResponseEntity.ok().body(responseDto);
     }
