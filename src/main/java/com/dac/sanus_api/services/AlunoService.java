@@ -31,10 +31,10 @@ public class AlunoService {
     @Transactional
     public Aluno inserirAluno(AlunoRequestDto alunoDto){
         Usuario usuario = usuarioService.inserirUsuario(alunoDto.usuario());
-        alunoRepository.findById(usuario.getId())
-            .ifPresent(aluno -> new DuplicateCredentialsException(aluno.getId()));
         
-            
+        if (alunoRepository.findById(usuario.getId()).isPresent()) {
+            throw new DuplicateCredentialsException(usuario.getId());
+        }
         Plano plano = planoService.buscarPlanoPorId(alunoDto.planoId());
             
         String matriculaGerada = gerarMatricula();
