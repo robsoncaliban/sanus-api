@@ -38,9 +38,7 @@ public class AlunoService {
         Plano plano = planoService.buscarPlanoPorId(alunoDto.planoId());
             
         String matriculaGerada = gerarMatricula();
-        String senhaAleatoria = generator.gerarSenhaAleatoria(15);
         var alunoNovo = new Aluno(usuario, matriculaGerada);
-        alunoNovo.getUsuario().setSenha(senhaAleatoria);
         var planoAluno = new PlanoAluno(alunoNovo, plano);
         alunoNovo.setPlanoAluno(planoAluno);
 
