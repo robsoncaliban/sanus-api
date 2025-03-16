@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.dac.sanus_api.entidades.dtos.request.AlunoRequestDto;
+import com.dac.sanus_api.entidades.dtos.request.AlunoRequestDTO;
 import com.dac.sanus_api.entidades.dtos.response.AlunoReponseResumidoDto;
 import com.dac.sanus_api.entidades.dtos.response.AlunoResponseDto;
 import com.dac.sanus_api.entidades.usuarios.Aluno;
@@ -30,7 +30,7 @@ public class AlunoController {
 
     @PostMapping
     public ResponseEntity<AlunoReponseResumidoDto> criarAluno(
-        @RequestBody @Valid AlunoRequestDto alunoRequestDTO){
+        @RequestBody @Valid AlunoRequestDTO alunoRequestDTO){
         var alunoNovo = alunoService.inserirAluno(alunoRequestDTO);
         var responseDto = new AlunoReponseResumidoDto(alunoNovo);
         return ResponseEntity.ok().body(responseDto);

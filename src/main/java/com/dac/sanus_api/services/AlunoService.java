@@ -8,7 +8,7 @@ import org.springframework.stereotype.Service;
 
 import com.dac.sanus_api.entidades.Plano;
 import com.dac.sanus_api.entidades.PlanoAluno;
-import com.dac.sanus_api.entidades.dtos.request.AlunoRequestDto;
+import com.dac.sanus_api.entidades.dtos.request.AlunoRequestDTO;
 import com.dac.sanus_api.entidades.usuarios.Aluno;
 import com.dac.sanus_api.entidades.usuarios.Usuario;
 import com.dac.sanus_api.repositories.AlunoRepository;
@@ -29,7 +29,7 @@ public class AlunoService {
     private Generator generator;
 
     @Transactional
-    public Aluno inserirAluno(AlunoRequestDto alunoDto){
+    public Aluno inserirAluno(AlunoRequestDTO alunoDto){
         Usuario usuario = usuarioService.inserirUsuario(alunoDto.usuario());
         
         if (alunoRepository.findById(usuario.getId()).isPresent()) {
