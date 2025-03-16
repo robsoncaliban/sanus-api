@@ -41,4 +41,8 @@ public class UsuarioService implements UserDetailsService{
             .orElseThrow(() -> new NotFoundException("Usuario com o email: " + email +" não encontrado"));
     }
 
+    public boolean validarSenha(String senha, String encodedSenha) {
+        return passwordEncoder.matches(senha, encodedSenha);
+    }
+
 }
