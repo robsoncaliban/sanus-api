@@ -1,14 +1,21 @@
 package com.dac.sanus_api.entidades.usuarios;
 
-import java.io.Serializable;
+import java.util.Collection;
+import java.util.Set;
 
-import com.dac.sanus_api.entidades.dtos.request.UsuarioRequestDto;
+import org.springframework.security.core.userdetails.UserDetails;
+
+import com.dac.sanus_api.entidades.dtos.request.UsuarioRequestDTO;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.JoinTable;
+import jakarta.persistence.ManyToMany;
 import jakarta.persistence.Table;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -21,7 +28,7 @@ import lombok.ToString;
 @ToString(onlyExplicitlyIncluded = true)
 @Entity
 @Table(name = "TB_USUARIO")
-public class Usuario implements Serializable{
+public class Usuario implements UserDetails{
     private static final long serialVersionUID = 1L;
 
     @Id
@@ -31,6 +38,13 @@ public class Usuario implements Serializable{
     
     @ToString.Include
     private boolean admin;
+
+    @ManyToMany(fetch = FetchType.EAGER)
+    @JoinTable(name = "TB_USER_ROLE",
+        joinColumns = @JoinColumn(name="user_id"), 
+        inverseJoinColumns = @JoinColumn(name = "role_id")
+    )
+    private Set<Role> roles;
     
     @ToString.Include
     private String nome;
@@ -50,7 +64,7 @@ public class Usuario implements Serializable{
     @ToString.Include
     private boolean ativo;
 
-    public Usuario(UsuarioRequestDto usuarioDto) {
+    public Usuario(UsuarioRequestDTO usuarioDto) {
         this.ativo = true;
         this.admin = usuarioDto.admin();
         this.nome = usuarioDto.nome();
@@ -58,6 +72,27 @@ public class Usuario implements Serializable{
         this.telefone = usuarioDto.telefone();
         this.cpf = usuarioDto.cpf();
     }
+    
+    @Override
+    public Collection<Role> getAuthorities() {
+        return getRoles();
+    }
+    
+    @Override
+    public String getPassword() {
+        return getSenha();
+    }
+    
+    @Override
+    public String getUsername() {
+        return getEmail();
+    }
+
+    @Override
+    public boolean isEnabled() {
+        return isAtivo();
+    }
+ 
 
     
 }
