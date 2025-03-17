@@ -3,13 +3,11 @@ package com.dac.sanus_api.services.security;
 import java.time.Instant;
 import java.time.ZoneId;
 import java.time.ZonedDateTime;
-import java.util.List;
-
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.oauth2.jwt.JwtClaimsSet;
 import org.springframework.security.oauth2.jwt.JwtEncoder;
 import org.springframework.security.oauth2.jwt.JwtEncoderParameters;
 import org.springframework.stereotype.Service;
-
 
 import lombok.AllArgsConstructor;
 
@@ -22,14 +20,14 @@ public class TokenService {
         private static final int HOURS_EXPIRATION_TOKEN = 20;
         private static final ZoneId ZONE_ID = ZoneId.systemDefault();
 
-        public String generateToken(String email, List<Object> roles) {
+        public String gerarToken(UserDetails usuario) {
 
                 var claims = JwtClaimsSet.builder()
                                 .issuer("sanus-api")
-                                .subject(email)
+                                .subject(usuario.getUsername())
                                 .issuedAt(getCreationTime())
                                 .expiresAt(getExpirationTime())
-                                .claim("roles", roles )
+                                .claim("authorities", usuario.getAuthorities())
                                 .build();
 
                 return jwtEncoder
@@ -45,6 +43,5 @@ public class TokenService {
                 return ZonedDateTime.now(ZONE_ID).plusHours(HOURS_EXPIRATION_TOKEN)
                                 .toInstant();
         }
-
 
 }
