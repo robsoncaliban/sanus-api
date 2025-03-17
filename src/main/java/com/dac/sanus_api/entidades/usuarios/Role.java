@@ -1,6 +1,5 @@
 package com.dac.sanus_api.entidades.usuarios;
 
-
 import org.springframework.security.core.GrantedAuthority;
 
 import jakarta.persistence.Column;
@@ -11,11 +10,14 @@ import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import lombok.NonNull;
+import lombok.RequiredArgsConstructor;
 
 @Entity
 @Table(name = "TB_ROLE")
 @Data
 @NoArgsConstructor
+@RequiredArgsConstructor
 public class Role implements GrantedAuthority {
     private static final long serialVersionUID = 1L;
 
@@ -23,21 +25,13 @@ public class Role implements GrantedAuthority {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(unique = true, nullable = false)
+    @Column(unique = true)
+    @NonNull
     private String nome;
 
-    public Role(String nome) {
-        this.nome = nome;
-    }
-    
     @Override
     public String getAuthority() {
         return nome;
     }
 
-    @Override
-    public String toString() {
-        return nome;
-    }
-    
 }
