@@ -24,7 +24,7 @@ public class AuthController {
     private final AuthService authService;
 
     @PostMapping(value = "/login")
-    public ResponseEntity<String> login(@RequestBody @Valid LoginDTO login) {
+    public ResponseEntity<Void> login(@RequestBody @Valid LoginDTO login) {
 
         var token = authService.autenticar(login);
 
