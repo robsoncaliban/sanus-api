@@ -11,10 +11,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.dac.sanus_api.entidades.dtos.request.LoginDTO;
-import com.dac.sanus_api.services.UsuarioService;
-import com.dac.sanus_api.services.security.TokenService;
+import com.dac.sanus_api.services.security.AuthService;
 
-import io.jsonwebtoken.lang.Arrays;
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 
@@ -23,25 +21,22 @@ import lombok.AllArgsConstructor;
 @AllArgsConstructor
 public class AuthController {
 
-    private UsuarioService usuarioService;
-    private TokenService jwtService;
-    
-    @PostMapping(value = "/login")
-    public ResponseEntity<Void> login(@RequestBody @Valid LoginDTO login){
-        var user = usuarioService.loadUserByUsername(login.email());
+    private final AuthService authService;
 
-        var isValid = usuarioService.validarSenha(login.senha(), user.getPassword());
-        if(!isValid){
-            return ResponseEntity.notFound().build();
-        }
-        var jwt =  jwtService.generateToken(login.email(), Arrays.asList(user.getAuthorities().toArray()) );
-        var jwtCookie = ResponseCookie.from("token", jwt)
+    @PostMapping(value = "/login")
+    public ResponseEntity<String> login(@RequestBody @Valid LoginDTO login) {
+
+        var token = authService.autenticar(login);
+
+        var tokenCookie = ResponseCookie.from("token", token)
                 .httpOnly(true)
                 .secure(true)
                 .path("/")
                 .sameSite("Strict")
                 .maxAge(Duration.ofDays(7))
                 .build();
-        return ResponseEntity.ok().header(HttpHeaders.SET_COOKIE, jwtCookie.toString()).build();
+
+        return ResponseEntity.ok().header(HttpHeaders.SET_COOKIE,
+                tokenCookie.toString()).build();
     }
 }
